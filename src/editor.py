@@ -21,6 +21,11 @@ class DraggableElement:
         contains, _ = self.patch.contains(event)
         if not contains: return
         
+        # --- NUEVA LÓGICA DE BORRADO (Clic Derecho = 3) ---
+        if event.button == 3: 
+            self.borrar_elemento()
+            return
+        
         x0, y0 = self.patch.get_xy()
         
         # Si clicamos en la FÁBRICA (x < 0), clonamos
@@ -29,7 +34,17 @@ class DraggableElement:
             return
 
         self.press = x0, y0, event.xdata, event.ydata
-
+    
+    def borrar_elemento(self):
+        # Solo permitimos borrar si NO está en la fábrica (x >= 0)
+        x_actual, _ = self.patch.get_xy()
+        if x_actual >= 0:
+            self.patch.remove() # Lo quita del dibujo
+            if self in self.editor.elementos:
+                self.editor.elementos.remove(self) # Lo quita de la lista de memoria
+            self.canvas.draw()
+            print(f"Elemento {self.tipo} eliminado.")
+    
     def clonar_y_activar(self, event):
         nuevo_patch = None
         
@@ -145,7 +160,7 @@ class EditorEDSIM:
         # ASFALTO: Asegúrate de que el alto sea coherente (ej: de -40 a 40)
         # Rectangle((x, y), ancho, alto)
         self.ax.add_patch(patches.Rectangle((0, -40), 500, 80, color='#333333', zorder=1))
-        
+                
         # Muestras estáticas en la fábrica
         # (Aquí NO usamos hatch ni lógica compleja, solo la muestra visual)
         muestras = [

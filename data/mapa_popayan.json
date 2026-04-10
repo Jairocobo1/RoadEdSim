@@ -1,27 +1,22 @@
 [
     {
         "tipo": "cebra",
-        "x": 0,
+        "x": 470,
+        "y": -20
+    },
+    {
+        "tipo": "barrera",
+        "x": 460,
         "y": -20
     },
     {
         "tipo": "slot",
-        "x": 90,
+        "x": 130,
         "y": -35
     },
     {
-        "tipo": "barrera",
-        "x": 490,
-        "y": -15
-    },
-    {
         "tipo": "linea_central",
-        "x": 150,
-        "y": 0
-    },
-    {
-        "tipo": "linea_central",
-        "x": 280,
+        "x": 220,
         "y": 0
     }
 ]
